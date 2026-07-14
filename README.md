@@ -4,6 +4,70 @@ A beginner-friendly demonstration of building a **linear multi-node workflow** u
 
 ---
 
+## Graph Visualization
+
+### ASCII Flow
+
+```
+  +-----------+
+  |  __start__  |
+  +-----+-----+
+        |
+        v
+  +-----+-----+
+  |   input   |   input_node: wraps user_input as HumanMessage
+  +-----+-----+
+        |
+        v
+  +-----+-------+
+  |   analyze   |   analyze_node: detects Weather / Greeting / General
+  +-----+-------+
+        |
+        v
+  +-----+-------+
+  |   process   |   process_node: generates response, sets result
+  +-----+-------+
+        |
+        v
+  +-----+------+
+  |   output   |   output_node: finalizes and marks completed
+  +-----+------+
+        |
+        v
+  +-----+-----+
+  |  __end__  |
+  +-----------+
+```
+
+### Mermaid Diagram
+
+```mermaid
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	input(input)
+	analyze(analyze)
+	process(process)
+	output(output)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> input;
+	analyze --> process;
+	input --> analyze;
+	process --> output;
+	output --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+```
+
+> Run `python src/visualize_graph.py` to regenerate this output locally.
+
+---
+
 ## What is LangGraph?
 
 LangGraph is a library built on top of LangChain that lets you model agentic workflows as a **directed graph**. Each node in the graph is a Python function that reads from and writes to a shared state object. Edges define the execution order.
