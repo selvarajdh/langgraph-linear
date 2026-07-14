@@ -1,0 +1,5 @@
+# Core dependencies
+langchain
+langgraph
+langchain-anthropic
+python-dotenv
